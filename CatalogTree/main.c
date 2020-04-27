@@ -6,15 +6,25 @@
 
 int main()
 {
-	printf("START");
+	printf("START\n");
 	NODE* root = NULL;
-	char path[1000]= "C:\\Users\\jenya.sharunov\\Documents\\test";
-	char fname[] = "something.txt";
+	char path[1000]= "C:\\Users\\jenya.sharunov\\Documents\\test";//êàòàëîã â êîòîðîì èùåì ÔÎÐÌÀÒ ÎÁßÇÀÒÅËÜÍÎ ÒÀÊÎÉ
+	strcat(path, "\\");
+	char fname[] = "something.txt";//èñêîìûé ôàéë
 	root = Create(path);
 	root = MakeTree(path, root);
+	printf("This is what your catologist looks like\n");
 	Print(root, 0);
-	Search(root, fname,0,NO);
+	printf("\nAll folders where the desired file is:\n\n");
+	Search(root, fname,NO);
+	printf("\nThe number of files in the folder:\n");
+	Quantity(root,0);
+	long int fsize = 2;//êàêîé  ðàçìåð â ÊÂ
+	fsize *= 1024;
+	printf("\nfiles larger than the specified size:\n");
+	char data[1000];
+	strcpy(data, root->data);
+	More(root,fsize,data);
 	root = DelTree(root);
-	printf("l;ol");
 	return 0;
 }
