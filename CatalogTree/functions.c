@@ -48,7 +48,28 @@ NODE* AddChild(NODE* par, char* s)
 	}
 	return par;
 }
-
+enum Flag Search(NODE* root, char* fname, int level,enum flag flag)
+{
+	NODE* p = root;
+	
+	if (p->child)
+	{
+		flag = Search(p->child, fname, level + 1, NO);
+		if (flag == YES)
+		{
+			printf("%s\n", p->data);
+			flag = NO;
+		}
+	}
+	if (p->brother)
+		flag=Search(p->brother, fname,level,flag);
+	if (strcmp(p->data, fname) == 0)
+	{
+		flag = YES;
+	}
+	return flag;
+	
+}
 void Print(NODE* root, int level)
 {
 	NODE* p = root;
@@ -73,7 +94,11 @@ NODE* Go(char* path, NODE* root)
 	{
 		if (fc.attrib & _A_SUBDIR)
 		{
-			root = AddChild(root, fc.name);
+			char fname1[1000];
+			strcpy(fname1,path);
+			fname1[strlen(fname1)-1] = NULL;
+			strcat(fname1, fc.name);
+			root = AddChild(root, fname1);
 			char path1[1000];
 			strcpy(path1, path);
 			strcpy(path1 + strlen(path1) - 1, fc.name);
